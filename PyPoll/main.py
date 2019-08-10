@@ -27,10 +27,11 @@ with open(csv_path, "r", newline = "") as file_handler:
             votes.append(row[2])
             if row[2] not in candidates:
                 candidates.append(row[2])
-print(f"""Election Results
+output_piece1 = (f"""Election Results
 ---------------------------
 Total Votes: {voter_count}
----------------------------""")                
+---------------------------""")
+print(output_piece1)
 
 # Setting each candidates' vote count as 0 at the beginning 
 for i in range(len(candidates)):
@@ -44,46 +45,29 @@ for i in range(len(votes)):
 
 # (1) Calculating the percentages (2) Printing those and number of votes out to terminal (3) Computing the winner
 percentages = []
+output_piece2 = []
 for i,j in zip(candidates, vote_counts):
     percentage = round((j/voter_count) * 100,3)
     percentages.append(percentage) # Percentages list will be used when writing the results into a text file 
     print(f"{i}: {percentage}% ({j})")
+    output_piece2.append(f"{i}: {percentage}% ({j})") 
     if j == max(vote_counts):
-        winner = i
-print("---------------------------")
-print(f"Winner: {winner}")
+        winner = i  
+output_piece3 = (f"""---------------------------
+Winner: {winner}""")
+print(output_piece3)
 
 # Writing the output into a text file called output.txt
-output_path = os.path.join(".","Resources","output.txt")
+output_path = os.path.join(".", "Resources", "output.txt")
 with open(output_path,"w") as file_handler:
-    output_writer = file_handler.write("""Election Results
----------------------------
-Total Votes: """)
-    output_writer = file_handler.write(str(voter_count))
+    output_writer = file_handler.write(output_piece1)
     output_writer = file_handler.write("""
----------------------------
 """)
-
-    for i in candidates:
+    for i in output_piece2:
         output_writer = file_handler.write(str(i))
-        output_writer = file_handler.write(", ")
-    output_writer - file_handler.write("""
+        output_writer = file_handler.write("""
 """)
-    for i in percentages:
-        output_writer = file_handler.write(str(i))
-        output_writer = file_handler.write("%, ")
-    output_writer - file_handler.write("""
-""")
-    for i in vote_counts:
-        output_writer = file_handler.write(str(i))
-        output_writer = file_handler.write(", ")
-    output_writer - file_handler.write("""
-""")
-
-    output_writer = file_handler.write("""
----------------------------
-Winner: """)
-    output_writer = file_handler.write(winner)
+    output_writer = file_handler.write(output_piece3)
 
 
 # In[ ]:
